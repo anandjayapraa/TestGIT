@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+  <div class='panel-heading'>
+    {{pageTitle}}
+  </div>
+
+  <div class='panel-body'>
+    <div class='row'>
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <input [(ngModel)] = 'listFilter' type="text">
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-6'>
+        <h3>Filtered by:{{listFilter}}</h3>
+        <button (click)= "IncrementRank()">Rank</button>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table class='table' *ngIf='employees && employees.length > 0'>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>DOB</th>
+            <th>Salary</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of filteredEmployees">
+            <td> {{employee.code | converttospaces:'-' }} </td>
+            <td> {{employee.firstName}} </td>
+            <td>{{employee.lastName}}</td>
+            <td>{{employee.dob | date:'mm-dd-yyyy'}}</td>
+            <td>{{employee.salary | currency:'USD':true}}</td>
+            <td> <button (click) = 'IncrementRank(employee)'>+</button></td>
+            <td><app-starrating [rank] = 'employee.rank' (ratingClicked)= 'onRatingClicked($event,employee)'> </app-starrating></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
